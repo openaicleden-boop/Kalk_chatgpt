@@ -33,7 +33,41 @@ function sanitizeExpression(expression) {
 }
 
 function validateExpression(expression) {
-  return /^[0-9+\-*/^().,%a-z]*$/i.test(expression);
+  if (!/^[0-9+\-*/^().,%a-z]*$/i.test(expression)) {
+    return false;
+  }
+
+  const identifiers = Array.from(expression.matchAll(/[a-z]+/gi));
+  if (identifiers.length === 0) {
+    return true;
+  }
+
+  const allowedFunctions = new Set(Object.keys(functionsMap));
+  const allowedConstants = new Set(Object.keys(constantsMap));
+
+  for (const match of identifiers) {
+    const token = match[0].toLowerCase();
+    const index = match.index ?? 0;
+    const nextChar = expression.charAt(index + match[0].length);
+
+    if (allowedFunctions.has(token)) {
+      if (nextChar !== "(") {
+        return false;
+      }
+      continue;
+    }
+
+    if (allowedConstants.has(token)) {
+      if (nextChar === "(") {
+        return false;
+      }
+      continue;
+    }
+
+    return false;
+  }
+
+  return true;
 }
 
 function replaceTokens(expression) {
@@ -45,7 +79,7 @@ function replaceTokens(expression) {
   });
 
   Object.entries(functionsMap).forEach(([token, fn]) => {
-    const regex = new RegExp(`${token}\(`, "g");
+    const regex = new RegExp(`\\b${token}\\(`, "g");
     result = result.replace(regex, `__fn.${token}(`);
   });
 
