@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Инженерный калькулятор</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="calculator" aria-label="Инженерный калькулятор">
+        <header class="calculator__header">
+          <h1>Инженерный калькулятор</h1>
+          <p>Поддерживаются скобки, степени, тригонометрия и логарифмы.</p>
+        </header>
+        <div class="display" role="group" aria-label="Экран калькулятора">
+          <input
+            id="expression"
+            class="display__expression"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            placeholder="Введите выражение"
+            aria-label="Выражение"
+          />
+          <div id="result" class="display__result" aria-live="polite">0</div>
+        </div>
+        <div class="controls">
+          <div class="controls__row">
+            <button data-action="clear" class="action">C</button>
+            <button data-action="backspace" class="action">⌫</button>
+            <button data-value="(" class="action">(</button>
+            <button data-value=")" class="action">)</button>
+            <button data-action="percent" class="action">%</button>
+          </div>
+          <div class="controls__row">
+            <button data-value="sin(" class="action">sin</button>
+            <button data-value="cos(" class="action">cos</button>
+            <button data-value="tan(" class="action">tan</button>
+            <button data-value="sqrt(" class="action">√</button>
+            <button data-value="^" class="action">xʸ</button>
+          </div>
+          <div class="controls__row">
+            <button data-value="7">7</button>
+            <button data-value="8">8</button>
+            <button data-value="9">9</button>
+            <button data-value="/">÷</button>
+            <button data-value="log(" class="action">log</button>
+          </div>
+          <div class="controls__row">
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+            <button data-value="6">6</button>
+            <button data-value="*">×</button>
+            <button data-value="ln(" class="action">ln</button>
+          </div>
+          <div class="controls__row">
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+            <button data-value="-">−</button>
+            <button data-value="pi" class="action">π</button>
+          </div>
+          <div class="controls__row">
+            <button data-value="0" class="wide">0</button>
+            <button data-value=".">.</button>
+            <button data-value="+">+</button>
+            <button data-value="e" class="action">e</button>
+            <button data-action="equals" class="equals">=</button>
+          </div>
+        </div>
+        <div class="helper">
+          <p>
+            Примеры: <code>sin(45)</code>, <code>sqrt(2) * 10</code>,
+            <code>log(1000)</code>, <code>2^8</code>.
+          </p>
+        </div>
+      </section>
+      <aside class="history" aria-label="История вычислений">
+        <h2>История</h2>
+        <ul id="historyList" class="history__list"></ul>
+        <button id="clearHistory" class="history__clear">Очистить историю</button>
+      </aside>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
